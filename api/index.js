@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // conexion a la base de datos
-mongoose.connect('mongodb://ivanfelix:Marciano88@ds133856.mlab.com:33856/videplayer',{ useMongoLient: true })
+mongoose.connect('mongodb://ivanfelix:Marciano88@ds133856.mlab.com:33856/videplayer')
 	.then(()=>{
 	console.log('La conexion se realizo');
 	// crear servidor

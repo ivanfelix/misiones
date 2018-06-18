@@ -8,11 +8,11 @@ var MisionSchema = Schema({
 	user: {type: Schema.Types.ObjectId, ref:'User'},
 	comments:[
 		{
-			comment: {type: Schema.Types.ObjectId, ref:'Comment'},
+			type: Schema.Types.ObjectId, 
+			ref:'Comment'
 		}
 	]
 },
 {collection:'misiones'});
-
 
 module.exports = mongoose.model('Mision', MisionSchema);

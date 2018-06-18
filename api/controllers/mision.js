@@ -1,7 +1,7 @@
 var Mision = require('../models/mision');
 var moment = require('moment');
 
-function saveMision(req, res) {
+saveMision = async (req, res) => {
 	var params = req.body;
 	var mision = new Mision();
 
@@ -10,7 +10,7 @@ function saveMision(req, res) {
 		mision.created_at = moment().unix();
 		mision.user = params.user;
 		
-	mision.save((err, misionStored) => {
+	await mision.save((err, misionStored) => {
 		if(err) return res.status(500).send({message: 'Error', error: err});
 		if(misionStored){
 			return res.status(200).send({mision: misionStored});
@@ -18,10 +18,9 @@ function saveMision(req, res) {
 			return res.status(404).send({message:'no se guardo'});
 		}
 	})
-	
 }
-function getMisions(req, res){
-    Mision.find({})
+ getMisions = async (req, res) => {
+    await Mision.find({})
 	.populate('user')
 	.populate('comments.comment')
     .exec((err, misions) => {
@@ -29,19 +28,19 @@ function getMisions(req, res){
         if(misions) return res.status(200).send({misions});
     })
 }
-
-function getMision(req, res){
+getMision = async (req, res) => {
 	var idMision = req.params.id;
-
-	Mision.findById(idMision)
-		.populate('user')
-		.populate('comments.comment')
+	await Mision.findById(idMision)
+		.populate('user', 'nick')
+		.populate({
+			path:'comments',
+			populate : { path: 'user' }
+		})
 		.exec((err, mision) => {
 		if(err) return res.status(500).send({err});
         if(mision) return res.status(200).send({mision});
 	})
 }
-
 module.exports = {
     saveMision,
 	getMisions,
