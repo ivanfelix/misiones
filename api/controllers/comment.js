@@ -22,21 +22,7 @@ saveComment = async (req, res) => {
 		})
 		mision.comments.push(comment);
 		await mision.save()
-		
-	
 }
-
-function getComments(req, res){
-	var params = req.body;
-    Comment.find({})
-	.populate('user')
-    .exec((err, comments) => {
-        if(err) return res.status(500).send({err});
-        if(comments) return res.status(200).send({comments});
-    })
-}
-
 module.exports = {
-    saveComment,
-    getComments
+    saveComment
 }
